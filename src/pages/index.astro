@@ -1,21 +1,20 @@
 ---
-const requestUrl = new URL(Astro.request.url);
-const apiUrl = `${requestUrl.origin}/api/files`;
-console.log("Fetching from:", apiUrl);
-const response = await fetch(apiUrl);
-console.log("Response status:", response.status);
+let data: any; // Declare `data` with type `any` at the top level if its type is uncertain
 
-if (!response.ok) {
-  throw new Error(`HTTP error! status: ${response.status}`);
-}
-
-const text = await response.text();
 try {
-  const files = JSON.parse(text);
-  console.log(files);
+  const requestUrl = new URL(Astro.request.url);
+  const apiUrl = `${requestUrl.origin}/api/files_api`;
+  const response = await fetch(apiUrl);
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const text = await response.text();
+  data = JSON.parse(text); // Since `data` is already declared, we're just assigning it here
 } catch (error) {
-  console.error("Error parsing JSON:", error);
-  console.error("Received text:", text);
+  console.error("Error fetching or parsing data:", error);
+  data = []; // Provide a fallback value that matches the expected type structure
 }
 ---
 
@@ -26,7 +25,7 @@ try {
   <body>
     <h1>Files</h1>
     <ul>
-      {data.files?.map((file) => <li>{file.name}</li>)}
+      {data.map((file) => <li>{file.name}</li>)}
     </ul>
   </body>
 </html>
