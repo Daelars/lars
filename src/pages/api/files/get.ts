@@ -1,21 +1,29 @@
-import { supabaseClient } from "../../../server/supabaseClient";
+// Import the readDirectory function
+import type { APIRoute } from "astro";
+import { readDirectory } from "../../lib/utils/readDirectory"; // Adjust the import path as necessary
 
-export const GET = async (request: Request): Promise<Response> => {
-  const { data, error } = await supabaseClient.from("files").select("*");
+export const get: APIRoute = async ({ request }) => {
+  // Use the FILE_DIR environment variable or a default path
+  const directoryPath = process.env.FILE_DIR || "./default/path/to/markdown"; // Adjust the default path as necessary
 
-  if (error) {
+  try {
+    // Call readDirectory asynchronously if it's designed to return a Promise
+    const files = await readDirectory(directoryPath);
+
+    // Return the files as JSON
+    return new Response(JSON.stringify(files), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    // Handle any errors that occur during directory reading or file processing
     return new Response(JSON.stringify({ error: error.message }), {
-      status: 400,
+      status: 500,
       headers: {
         "Content-Type": "application/json",
       },
     });
   }
-
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 };
