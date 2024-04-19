@@ -1,0 +1,23 @@
+<!-- ---
+import fs from "fs";
+const directory = import.meta.env.FILE_DIR;
+
+import path from "path";
+import * as dotenv from "dotenv";
+dotenv.config();
+import { fetchAndProcessFiles } from "../../lib/utils/fetchAndProcessFiles";
+import { extractMarkdownData } from "../../lib/utils/extractMarkdownData";
+import { cleanFileName } from "../../lib/utils/cleanFileName";
+import type { FileData, FileEssentials } from "../../types";
+
+export async function get() {
+  try {
+    const fileNames = fs.readdirSync(directory);
+    // You could call `fetchAndProcessFiles` directly here
+    const processedData = await fetchAndProcessFiles(fileNames, directory);
+    return { body: JSON.stringify(processedData) };
+  } catch (error) {
+    // ... your error handling
+  }
+}
+--- -->

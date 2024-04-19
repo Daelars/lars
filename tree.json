@@ -1,0 +1,113 @@
+{
+  "path": "./src/",
+  "name": "src",
+  "children": [
+    {
+      "path": "src\\components",
+      "name": "components",
+      "children": [
+        {
+          "path": "src\\components\\files.tsx",
+          "name": "files.tsx"
+        },
+        {
+          "path": "src\\components\\MyComponent.tsx",
+          "name": "MyComponent.tsx"
+        }
+      ]
+    },
+    {
+      "path": "src\\env.d.ts",
+      "name": "env.d.ts"
+    },
+    {
+      "path": "src\\layouts",
+      "name": "layouts",
+      "children": []
+    },
+    {
+      "path": "src\\lib",
+      "name": "lib",
+      "children": [
+        {
+          "path": "src\\lib\\fetch-files.ts",
+          "name": "fetch-files.ts"
+        },
+        {
+          "path": "src\\lib\\markdown.ts",
+          "name": "markdown.ts"
+        },
+        {
+          "path": "src\\lib\\process-markdown.ts",
+          "name": "process-markdown.ts"
+        },
+        {
+          "path": "src\\lib\\utils",
+          "name": "utils",
+          "children": [
+            {
+              "path": "src\\lib\\utils\\cleanFileName.ts",
+              "name": "cleanFileName.ts"
+            },
+            {
+              "path": "src\\lib\\utils\\extractMarkdownData.ts",
+              "name": "extractMarkdownData.ts"
+            },
+            {
+              "path": "src\\lib\\utils\\fetchAndProcessFiles.ts",
+              "name": "fetchAndProcessFiles.ts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src\\pages",
+      "name": "pages",
+      "children": [
+        {
+          "path": "src\\pages\\api",
+          "name": "api",
+          "children": [
+            {
+              "path": "src\\pages\\api\\process-markdown.astro",
+              "name": "process-markdown.astro"
+            }
+          ]
+        },
+        {
+          "path": "src\\pages\\index.astro",
+          "name": "index.astro"
+        }
+      ]
+    },
+    {
+      "path": "src\\server",
+      "name": "server",
+      "children": [
+        {
+          "path": "src\\server\\prismaClient.ts",
+          "name": "prismaClient.ts"
+        },
+        {
+          "path": "src\\server\\supabaseClient.ts",
+          "name": "supabaseClient.ts"
+        }
+      ]
+    },
+    {
+      "path": "src\\styles",
+      "name": "styles",
+      "children": [
+        {
+          "path": "src\\styles\\global.css",
+          "name": "global.css"
+        }
+      ]
+    },
+    {
+      "path": "src\\types.ts",
+      "name": "types.ts"
+    }
+  ]
+}
