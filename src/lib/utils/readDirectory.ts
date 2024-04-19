@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
 import { supabaseClient } from "../../server/supabaseClient"; // Adjust the import path as necessary
-import type { FileData } from "../../types"; // Adjust the import path as necessary
+import type { FileData, FileEssentials } from "../../types"; // Adjust the import path as necessary
 
 dotenv.config();
 
@@ -13,7 +13,10 @@ if (!FILE_DIR) {
   process.exit(1);
 }
 
-const readDirectory = (dirPath: string, arrayOfFiles: FileData[] = []) => {
+const readDirectory = (
+  dirPath: string,
+  arrayOfFiles: FileData[] = []
+): FileData[] => {
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
@@ -25,7 +28,8 @@ const readDirectory = (dirPath: string, arrayOfFiles: FileData[] = []) => {
       arrayOfFiles.push({
         name: file,
         content: fileContent,
-        // Removed 'path' property
+        type: "markdown", // Assuming 'type' is a required property in FileData
+        created_at: new Date(), // Assuming 'created_at' is a required property in FileData
       });
     }
   });
