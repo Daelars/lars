@@ -24,8 +24,8 @@ const readDirectory = (dirPath: string, arrayOfFiles: FileData[] = []) => {
       const fileContent = fs.readFileSync(filePath, "utf-8");
       arrayOfFiles.push({
         name: file,
-        path: filePath,
         content: fileContent,
+        // Removed 'path' property
       });
     }
   });
