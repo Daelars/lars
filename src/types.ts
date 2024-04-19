@@ -5,6 +5,7 @@
 export interface FileData extends FileEssentials {
   content?: string;
   url?: string;
+  //path?: string;
 }
 
 export interface FileEssentials {
