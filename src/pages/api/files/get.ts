@@ -1,6 +1,6 @@
 import { supabaseClient } from "../../../server/supabaseClient";
 
-export const get = async (request: Request): Promise<Response> => {
+export const GET = async (request: Request): Promise<Response> => {
   const { data, error } = await supabaseClient.from("files").select("*");
 
   if (error) {

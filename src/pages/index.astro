@@ -1,21 +1,6 @@
 ---
-let data: any; // Declare `data` with type `any` at the top level if its type is uncertain
-
-try {
-  const requestUrl = new URL(Astro.request.url);
-  const apiUrl = `${requestUrl.origin}/api/files_api`;
-  const response = await fetch(apiUrl);
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const text = await response.text();
-  data = JSON.parse(text); // Since `data` is already declared, we're just assigning it here
-} catch (error) {
-  console.error("Error fetching or parsing data:", error);
-  data = []; // Provide a fallback value that matches the expected type structure
-}
+const response = await fetch("http://localhost:4321/api/files/get");
+const files = await response.json();
 ---
 
 <html>
@@ -25,7 +10,47 @@ try {
   <body>
     <h1>Files</h1>
     <ul>
-      {data.map((file) => <li>{file.name}</li>)}
+      {files.map((file) => <li>{file.name}</li>)}
     </ul>
+
+    <script type="module">
+      async function addFile(fileName) {
+        const response = await fetch("/api/files/post", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: fileName }),
+        });
+        return response.json();
+      }
+
+      async function updateFile(fileId, newDetails) {
+        const response = await fetch("/api/files/put", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: fileId, ...newDetails }),
+        });
+        return response.json();
+      }
+
+      async function deleteFile(fileId) {
+        const response = await fetch("/api/files/delete", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: fileId }),
+        });
+        return response.json();
+      }
+
+      // Example usage
+      document.addEventListener("DOMContentLoaded", () => {
+        // Attach these functions to your form submissions or button clicks as needed
+      });
+    </script>
   </body>
 </html>
