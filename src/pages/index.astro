@@ -1,43 +1,23 @@
 ---
-import type { FileData } from "../types"; // Assuming your type definition is in a 'types' file
-
-// Server-side fetching (if possible)
-const { files: initialFiles } = await Astro.glob("./content/**/*.md"); // Adjust the path if needed
+// src/pages/index.astro
+// Make sure to replace '/api/files' with the correct path to your API endpoint
+const response = await fetch(`${Astro.request.url.origin}/api/files_api`);
+const files = await response.json();
 ---
 
 <html>
-  <head>
-    <title>Markdown Files</title>
-  </head>
-  <body>
-    <h1>Markdown Files</h1>
-
-    <script>
-      // Client-side state to hold all files
-      let files = initialFiles;
-
-      // Client-side fetch logic
-      const fetchMarkdownFiles = async () => {
-        const response = await fetch(
-          new URL("/api/markdown", window.origin).toString()
-        );
-        const { files: updatedFiles } = await response.json();
-        files = updatedFiles; // Update local state
-      };
-
-      // Call fetch on page load
-      fetchMarkdownFiles();
-    </script>
-
+<head>
+    <title>Files List</title>
+</head>
+<body>
+    <h1>Files</h1>
     <ul>
-      {
-        files.map((file) => (
-          <li key={file.name}>
-            <h2>{file.name}</h2>
-            <div set:html={file.content} />
-          </li>
-        ))
-      }
+        {files.map(file => (
+            <li key={file.id}>
+                <h2>{file.name}</h2>
+                <!-- Add more details you want to display about each file -->
+            </li>
+        ))}
     </ul>
-  </body>
+</body>
 </html>
