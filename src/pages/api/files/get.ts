@@ -4,7 +4,7 @@ import { readDirectory } from "../../lib/utils/readDirectory"; // Adjust the imp
 
 export const get: APIRoute = async ({ request }) => {
   // Use the FILE_DIR environment variable or a default path
-  const directoryPath = process.env.FILE_DIR || "./default/path/to/markdown"; // Adjust the default path as necessary
+  const directoryPath = process.env.FILE_DI; // Adjust the default path as necessary
 
   try {
     // Call readDirectory asynchronously if it's designed to return a Promise

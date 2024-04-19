@@ -13,7 +13,7 @@ if (!FILE_DIR) {
   process.exit(1);
 }
 
-const readDirectory = (
+export const readDirectory = (
   dirPath: string,
   arrayOfFiles: FileData[] = []
 ): FileData[] => {
