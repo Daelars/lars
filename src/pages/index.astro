@@ -1,17 +1,21 @@
 ---
-// src/pages/index.astro
-// Convert Astro.request.url to a URL object if it's not already one
 const requestUrl = new URL(Astro.request.url);
-const response = await fetch(`${requestUrl.origin}/api/files`);
-const text = await response.text(); // Temporarily get the response as text
-console.log(text); // Check if it's JSON or an unexpected HTML response
-let data;
+const apiUrl = `${requestUrl.origin}/api/files`;
+console.log("Fetching from:", apiUrl);
+const response = await fetch(apiUrl);
+console.log("Response status:", response.status);
+
+if (!response.ok) {
+  throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+const text = await response.text();
 try {
-  data = JSON.parse(text); // Attempt to parse it as JSON
+  const files = JSON.parse(text);
+  console.log(files);
 } catch (error) {
   console.error("Error parsing JSON:", error);
-  // Handle the error or set a fallback for `data`
-  data = {}; // Set to a default value or handle accordingly
+  console.error("Received text:", text);
 }
 ---
 
