@@ -1,17 +1,15 @@
-import { Astro } from 'astro';
+// src/lib/utils/readDirectory.ts
+import { Astro } from "astro";
 
-export async function get() {
-    try {
-      // Access your environment variable 
-      const fileDir = '.' + process.env.FILE_DIR;  // Assumes `fetchContent` can handle relative paths
-      const files = await Astro.glob(`${fileDir}/**/*`);
-  
-      // Filter for files only
-      const fileData = files.filter(file => !file.isDirectory)
-                           .map(file => ({ name: file.name, path: file.path }));
-  
-       return new Response(JSON.stringify(fileData));
-    } catch (error) {
-      return new Response(`Error: ${error.message}`, { status: 500 }); // Error response
-    }
-  }
+export async function getMarkdownFiles() {
+  const fileDir = process.env.FILE_DIR; // Adjust this path to where your markdown files are stored
+  const files = await Astro.glob(`${fileDir}/**/*.md`);
+
+  const fileData = files.map((file) => ({
+    name: file.name,
+    path: file.path,
+    // You can add more metadata extraction logic here
+  }));
+
+  return fileData;
+}
