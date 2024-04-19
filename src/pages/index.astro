@@ -7,18 +7,13 @@ const files = await response.json();
 ---
 
 <html>
-<head>
+  <head>
     <title>Files List</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Files</h1>
     <ul>
-        {files.map(file => (
-            <li key={file.id}>
-                <h2>{file.name}</h2>
-                <!-- Add more details you want to display about each file -->
-            </li>
-        ))}
+      {files.map((file) => <li>{file.name}</li>)}
     </ul>
-</body>
+  </body>
 </html>
