@@ -1,15 +1,25 @@
 // src/lib/utils/readDirectory.ts
-import { Astro } from "astro";
+import dotenv from "dotenv";
+import * as fs from "fs";
+import * as path from "path";
 
-export async function getMarkdownFiles() {
-  const fileDir = process.env.FILE_DIR; // Adjust this path to where your markdown files are stored
-  const files = await Astro.glob(`${fileDir}/**/*.md`);
+dotenv.config();
 
-  const fileData = files.map((file) => ({
-    name: file.name,
-    path: file.path,
-    // You can add more metadata extraction logic here
-  }));
+export function getMarkdownFiles() {
+  const fileDir = process.env.FILE_DIR; // Ensure this is set in your .env file
+  if (!fileDir) {
+    console.error("FILE_DIR is not set in .env file.");
+    return [];
+  }
 
-  return fileData;
+  try {
+    const files = fs.readdirSync(fileDir);
+    return files.map((file) => ({
+      name: file,
+      path: path.join(fileDir, file),
+    }));
+  } catch (error) {
+    console.error("Error reading directory:", error);
+    return [];
+  }
 }
